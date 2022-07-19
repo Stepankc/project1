@@ -16,5 +16,6 @@ export * from './modelCharge';
 export * from './typeObject';
 export * from './owner';
 export * from './timePeriod';
+export * from './_invoice';
 
 export default _mock;

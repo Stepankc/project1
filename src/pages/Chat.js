@@ -24,7 +24,7 @@ export default function Chat() {
   }, [dispatch]);
 
   return (
-    <Page title="Chat">
+    <Page title="Чат">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Card sx={{ height: '72vh', display: 'flex' }}>
           <ChatSidebar />

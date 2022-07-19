@@ -1,22 +1,16 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { sentenceCase } from 'change-case';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { TableRow, Checkbox, TableCell, Typography, MenuItem } from '@mui/material';
-// utils
-import { fDate } from '../../../../utils/formatTime';
-import { fCurrency } from '../../../../utils/formatNumber';
+import { Avatar, Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mui/material';
 // components
-import Label from '../../../../components/Label';
-import Image from '../../../../components/Image';
-import Iconify from '../../../../components/Iconify';
-import { TableMoreMenu } from '../../../../components/table';
-//
+import Label from '../../../components/Label';
+import Iconify from '../../../components/Iconify';
+import { TableMoreMenu } from '../../../components/table';
 
 // ----------------------------------------------------------------------
 
-ProductTableRow.propTypes = {
+UserTableRow.propTypes = {
   row: PropTypes.object,
   selected: PropTypes.bool,
   onEditRow: PropTypes.func,
@@ -24,10 +18,10 @@ ProductTableRow.propTypes = {
   onDeleteRow: PropTypes.func,
 };
 
-export default function ProductTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
+export default function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
   const theme = useTheme();
 
-  const { name, cover, createdAt, inventoryType, price } = row;
+  const { name, avatarUrl, company, role, isVerified, status } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -46,27 +40,39 @@ export default function ProductTableRow({ row, selected, onEditRow, onSelectRow,
       </TableCell>
 
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Image disabledEffect alt={name} src={cover} sx={{ borderRadius: 1.5, width: 48, height: 48, mr: 2 }} />
+        <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
         <Typography variant="subtitle2" noWrap>
           {name}
         </Typography>
       </TableCell>
 
-      <TableCell>{fDate(createdAt)}</TableCell>
+      <TableCell align="left">{company}</TableCell>
 
-      <TableCell align="center">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={
-            (inventoryType === 'out_of_stock' && 'error') || (inventoryType === 'low_stock' && 'warning') || 'success'
-          }
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {inventoryType ? sentenceCase(inventoryType) : ''}
-        </Label>
+      <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
+        {role}
       </TableCell>
 
-      <TableCell align="right">{fCurrency(price)}</TableCell>
+      <TableCell align="center">
+        <Iconify
+          icon={isVerified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
+          sx={{
+            width: 20,
+            height: 20,
+            color: 'success.main',
+            ...(!isVerified && { color: 'warning.main' }),
+          }}
+        />
+      </TableCell>
+
+      <TableCell align="left">
+        <Label
+          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
+          color={(status === 'banned' && 'error') || 'success'}
+          sx={{ textTransform: 'capitalize' }}
+        >
+          {status}
+        </Label>
+      </TableCell>
 
       <TableCell align="right">
         <TableMoreMenu
@@ -83,7 +89,7 @@ export default function ProductTableRow({ row, selected, onEditRow, onSelectRow,
                 sx={{ color: 'error.main' }}
               >
                 <Iconify icon={'eva:trash-2-outline'} />
-                Delete
+                Удалить
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -92,7 +98,7 @@ export default function ProductTableRow({ row, selected, onEditRow, onSelectRow,
                 }}
               >
                 <Iconify icon={'eva:edit-fill'} />
-                Edit
+                Изменить
               </MenuItem>
             </>
           }
