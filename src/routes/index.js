@@ -33,7 +33,14 @@ export default function Router() {
         { path: 'monitoring', element: <Monitoring /> },
         { path: 'statistics', element: <Statistics /> },
         { path: 'charging', element: <Charging /> },
-        { path: 'chat', element: <Chat /> },
+        {
+          path: 'chat',
+          children: [
+            { element: <Chat />, index: true },
+            { path: 'new', element: <Chat /> },
+            { path: ':conversationKey', element: <Chat /> },
+          ],
+        },
         { path: 'users', element: <Users /> },
         { path: 'owners', element: <Owners /> },
         { path: 'settingsService', element: <SettingsService /> },
@@ -66,7 +73,6 @@ export default function Router() {
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }
-
 
 // Dashboard
 const Monitoring = Loadable(lazy(() => import('../pages/Monitoring')));
