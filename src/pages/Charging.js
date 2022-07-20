@@ -1,21 +1,17 @@
-import sumBy from 'lodash/sumBy';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Card,
   Table,
   Stack,
-  Switch,
   Tooltip,
   TableBody,
   Container,
   IconButton,
   TableContainer,
   TablePagination,
-  FormControlLabel,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../routes/paths';
@@ -58,7 +54,6 @@ export default function InvoiceList() {
     order,
     orderBy,
     rowsPerPage,
-    setPage,
     //
     selected,
     setSelected,
@@ -72,20 +67,12 @@ export default function InvoiceList() {
 
   const [tableData, setTableData] = useState(_invoices);
 
-  const [filterName, setFilterName] = useState('');
 
   const [filterService, setFilterService] = useState('all');
 
-  const { currentTab: filterStatus, onChangeTab: onFilterStatus } = useTabs('all');
+  const { currentTab: filterStatus } = useTabs('all');
 
-  const handleFilterName = (filterName) => {
-    setFilterName(filterName);
-    setPage(0);
-  };
 
-  const handleFilterService = (event) => {
-    setFilterService(event.target.value);
-  };
 
   const handleDeleteRow = (id) => {
     const deleteRow = tableData.filter((row) => row.id !== id);
@@ -110,7 +97,6 @@ export default function InvoiceList() {
   const dataFiltered = applySortFilter({
     tableData,
     comparator: getComparator(order, orderBy),
-    filterName,
     filterService,
     filterStatus,
   });
@@ -118,27 +104,9 @@ export default function InvoiceList() {
   const denseHeight = dense ? 56 : 76;
 
   const isNotFound =
-    (!dataFiltered.length && !!filterName) ||
     (!dataFiltered.length && !!filterStatus) ||
     (!dataFiltered.length && !!filterService);
 
-  const getLengthByStatus = (status) => tableData.filter((item) => item.status === status).length;
-
-  const getTotalPriceByStatus = (status) =>
-    sumBy(
-      tableData.filter((item) => item.status === status),
-      'totalPrice'
-    );
-
-  const getPercentByStatus = (status) => (getLengthByStatus(status) / tableData.length) * 100;
-
-  const TABS = [
-    { value: 'all', label: 'All', color: 'info', count: tableData.length },
-    { value: 'paid', label: 'Paid', color: 'success', count: getLengthByStatus('paid') },
-    { value: 'unpaid', label: 'Unpaid', color: 'warning', count: getLengthByStatus('unpaid') },
-    { value: 'overdue', label: 'Overdue', color: 'error', count: getLengthByStatus('overdue') },
-    { value: 'draft', label: 'Draft', color: 'default', count: getLengthByStatus('draft') },
-  ];
 
   return (
     <Page title="Invoice: List">
