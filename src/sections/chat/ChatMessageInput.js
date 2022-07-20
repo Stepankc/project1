@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Stack, Input, Divider, IconButton, InputAdornment } from '@mui/material';
+import { Stack, Input, Divider, IconButton } from '@mui/material';
 // utils
 import uuidv4 from '../../utils/uuidv4';
 // components
 import Iconify from '../../components/Iconify';
-import EmojiPicker from '../../components/EmojiPicker';
+
 
 // ----------------------------------------------------------------------
 
@@ -69,11 +69,7 @@ export default function ChatMessageInput({ disabled, conversationId, onSend }) {
         onKeyUp={handleKeyUp}
         onChange={(event) => setMessage(event.target.value)}
         placeholder="Type a message"
-        startAdornment={
-          <InputAdornment position="start">
-            <EmojiPicker disabled={disabled} value={message} setValue={setMessage} />
-          </InputAdornment>
-        }
+
         endAdornment={
           <Stack direction="row" spacing={1} sx={{ flexShrink: 0, mr: 1.5 }}>
             <IconButton disabled={disabled} size="small" onClick={handleAttach}>
