@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import { capitalCase } from 'change-case';
 // @mui
-import { Box, List, Stack, Select, Divider, Tooltip, MenuItem, Typography, IconButton } from '@mui/material';
-// hooks
-import useAuth from '../../hooks/useAuth';
+import { Box, List, Stack, Divider, MenuItem, Typography } from '@mui/material';
 // components
 import Iconify from '../../components/Iconify';
 import MyAvatar from '../../components/MyAvatar';
@@ -12,12 +9,11 @@ import BadgeStatus from '../../components/BadgeStatus';
 
 // ----------------------------------------------------------------------
 
-const STATUS = ['online', 'invisible', 'away'];
+// const STATUS = ['online', 'invisible', 'away'];
 
 export default function ChatAccount() {
-  const { user } = useAuth();
 
-  const [status, setStatus] = useState('online');
+  const [status] = useState('online');
 
   const [open, setOpen] = useState(null);
 

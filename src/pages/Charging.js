@@ -68,7 +68,7 @@ export default function InvoiceList() {
   const [tableData, setTableData] = useState(_invoices);
 
 
-  const [filterService, setFilterService] = useState('all');
+  const [filterService] = useState('all');
 
   const { currentTab: filterStatus } = useTabs('all');
 

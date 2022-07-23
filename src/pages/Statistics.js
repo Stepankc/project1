@@ -1,8 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import sumBy from 'lodash/sumBy';
 import { useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import {
   Container,
   Typography,
@@ -11,13 +9,11 @@ import {
   Card,
   Table,
   Stack,
-  Switch,
   Tooltip,
   TableBody,
   IconButton,
   TableContainer,
   TablePagination,
-  FormControlLabel,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../routes/paths';
@@ -60,7 +56,6 @@ export default function UserCreate() {
     order,
     orderBy,
     rowsPerPage,
-    setPage,
     //
     selected,
     setSelected,
@@ -74,20 +69,11 @@ export default function UserCreate() {
 
   const [tableData, setTableData] = useState(_invoices);
 
-  const [filterName, setFilterName] = useState('');
+  const [filterName] = useState('');
 
-  const [filterService, setFilterService] = useState('all');
+  const [filterService] = useState('all');
 
-  const { currentTab: filterStatus, onChangeTab: onFilterStatus } = useTabs('all');
-
-  const handleFilterName = (filterName) => {
-    setFilterName(filterName);
-    setPage(0);
-  };
-
-  const handleFilterService = (event) => {
-    setFilterService(event.target.value);
-  };
+  const { currentTab: filterStatus} = useTabs('all');
 
   const handleDeleteRow = (id) => {
     const deleteRow = tableData.filter((row) => row.id !== id);
@@ -124,23 +110,8 @@ export default function UserCreate() {
     (!dataFiltered.length && !!filterStatus) ||
     (!dataFiltered.length && !!filterService);
 
-  const getLengthByStatus = (status) => tableData.filter((item) => item.status === status).length;
 
-  const getTotalPriceByStatus = (status) =>
-    sumBy(
-      tableData.filter((item) => item.status === status),
-      'totalPrice'
-    );
 
-  const getPercentByStatus = (status) => (getLengthByStatus(status) / tableData.length) * 100;
-
-  const TABS = [
-    { value: 'all', label: 'All', color: 'info', count: tableData.length },
-    { value: 'paid', label: 'Paid', color: 'success', count: getLengthByStatus('paid') },
-    { value: 'unpaid', label: 'Unpaid', color: 'warning', count: getLengthByStatus('unpaid') },
-    { value: 'overdue', label: 'Overdue', color: 'error', count: getLengthByStatus('overdue') },
-    { value: 'draft', label: 'Draft', color: 'default', count: getLengthByStatus('draft') },
-  ];
 
   const { pathname } = useLocation();
 

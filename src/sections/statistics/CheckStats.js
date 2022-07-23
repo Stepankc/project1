@@ -1,25 +1,18 @@
-import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Switch, FormControlLabel, Typography } from '@mui/material';
-// utils
-import { fData } from '../../utils/formatNumber';
+import { Grid, Stack } from '@mui/material';
 // _mock
-import { countries, region, charging, modelCharge, typeObject, owner, timePeriod } from '../../_mock';
+import { region, charging, modelCharge, typeObject, owner, timePeriod } from '../../_mock';
 // components
-import Label from '../../components/Label';
-import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } from '../../components/hook-form';
+import { FormProvider, RHFSelect } from '../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
 export default function UserNewEditForm() {
-  const navigate = useNavigate();
 
   const NewUserSchema = Yup.object().shape({
     country: Yup.string().required('country is required'),
@@ -29,10 +22,6 @@ export default function UserNewEditForm() {
   const methods = useForm({
     resolver: yupResolver(NewUserSchema),
   });
-
-  const { reset, watch, setValue, handleSubmit } = methods;
-
-  const values = watch();
 
   return (
     <FormProvider methods={methods}>

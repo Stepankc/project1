@@ -4,8 +4,6 @@ import { Card, Container } from '@mui/material';
 // redux
 import { useDispatch } from '../redux/store';
 import { getConversations, getContacts } from '../redux/slices/chat';
-// routes
-import { PATH_DASHBOARD } from '../routes/paths';
 // hooks
 import useSettings from '../hooks/useSettings';
 // components

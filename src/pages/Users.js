@@ -5,11 +5,8 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import {
   Box,
-  Tab,
-  Tabs,
   Card,
   Table,
-  Switch,
   Button,
   Tooltip,
   Divider,
@@ -18,7 +15,6 @@ import {
   IconButton,
   TableContainer,
   TablePagination,
-  FormControlLabel,
   Typography,
   Stack
 } from '@mui/material';
@@ -36,31 +32,30 @@ import Iconify from '../components/Iconify';
 import Scrollbar from '../components/Scrollbar';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../components/table';
 // sections
-import { UserTableToolbar, UserTableRow } from '../sections/user/list';
+import { UserTableRow } from '../sections/user/list';
 
 // ----------------------------------------------------------------------
 
-const STATUS_OPTIONS = ['all', 'active', 'banned'];
+// const STATUS_OPTIONS = ['all', 'active', 'banned'];
 
-const ROLE_OPTIONS = [
-  'all',
-  'ux designer',
-  'full stack designer',
-  'backend developer',
-  'project manager',
-  'leader',
-  'ui designer',
-  'ui/ux designer',
-  'front end developer',
-  'full stack developer',
-];
-
+// const ROLE_OPTIONS = [
+//   'all',
+//   'ux designer',
+//   'full stack designer',
+//   'backend developer',
+//   'project manager',
+//   'leader',
+//   'ui designer',
+//   'ui/ux designer',
+//   'front end developer',
+//   'full stack developer',
+// ];
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', align: 'left' },
-  { id: 'company', label: 'Company', align: 'left' },
-  { id: 'role', label: 'Role', align: 'left' },
-  { id: 'isVerified', label: 'Verified', align: 'center' },
-  { id: 'status', label: 'Status', align: 'left' },
+  { id: 'name', label: 'Имя', align: 'left' },
+  { id: 'company', label: 'Компания', align: 'left' },
+  { id: 'role', label: 'Роль', align: 'left' },
+  { id: 'isVerified', label: 'Проверка', align: 'center' },
+  { id: 'status', label: 'Статус', align: 'left' },
   { id: '' },
 ];
 
@@ -72,7 +67,6 @@ export default function Users() {
     order,
     orderBy,
     rowsPerPage,
-    setPage,
     //
     selected,
     setSelected,
@@ -90,20 +84,11 @@ export default function Users() {
 
   const [tableData, setTableData] = useState(_userList);
 
-  const [filterName, setFilterName] = useState('');
+  const [filterName] = useState('');
 
-  const [filterRole, setFilterRole] = useState('all');
+  const [filterRole] = useState('all');
 
-  const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('all');
-
-  const handleFilterName = (filterName) => {
-    setFilterName(filterName);
-    setPage(0);
-  };
-
-  const handleFilterRole = (event) => {
-    setFilterRole(event.target.value);
-  };
+  const { currentTab: filterStatus } = useTabs('all');
 
   const handleDeleteRow = (id) => {
     const deleteRow = tableData.filter((row) => row.id !== id);
